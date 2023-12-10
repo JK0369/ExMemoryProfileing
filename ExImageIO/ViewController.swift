@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         ])
         
         downloadWithResizeV1()
+        downloadWithResizeV2()
     }
     
     func downloadWithResizeV1() {
@@ -53,10 +54,12 @@ class ViewController: UIViewController {
         let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil)!
         let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil)
         let options: [CFString : Any] = [
-            kCGImageSourceThumbnailMaxPixelSize: 100, 
+            kCGImageSourceThumbnailMaxPixelSize: 100,
             kCGImageSourceCreateThumbnailFromImageAlways: true
         ]
-        let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options)
+        let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary)!
+        let image = UIImage(cgImage: scaledImage)
+        imageView.image = image
     }
 }
 
